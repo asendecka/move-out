@@ -1,0 +1,17 @@
+{% extends "things/base.html" %}
+{% block content %}
+    <div class="content container">
+        <div class="row">{{ me}}
+            {% for thing in things %}
+            <div class="col-md-4">
+                <div>
+                    <a href="{% url 'things:detail' token=token pk=thing.pk %}">{% if thing.picture %}<img src="{{ thing.picture.url }}"/>{% endif %}</a>
+                </div>
+                <div class="">
+                    <a href="{% url 'things:detail' token=token pk=thing.pk %}">{{ thing.name }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

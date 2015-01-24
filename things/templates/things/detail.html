@@ -1,0 +1,18 @@
+{% extends "things/base.html" %}
+{% block content %}
+    <div>
+        <h1>{{ thing.name }}</h1>
+        {% if thing.picture %}<img src="{{ thing.picture.url }}">{% endif %}
+        {% if thing.taken_by %}
+            <p>
+                zarezerwowane przez
+                {{ thing.taken_by.first_name }} {{ thing.taken_by.last_name }}
+                {% if token == thing.taken_by.token %}
+                    {% include 'things/include/give_back_form.html' %}
+                {% endif %}
+            </p>
+        {% else %}
+            {% include 'things/include/take_form.html' %}
+        {% endif %}
+    </div>
+{% endblock %}
