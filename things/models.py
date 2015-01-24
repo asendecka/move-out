@@ -19,6 +19,8 @@ class Thing(models.Model):
     description = models.TextField(null=True, blank=True)
 
     def give_to(self, taker):
+        if self.taken_by:
+            raise ValueError("Cannot give the same thing twice")
         self.taken_by = taker
         self.save()
 

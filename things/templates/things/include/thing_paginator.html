@@ -1,0 +1,15 @@
+<div class="pagination pagination-lg">
+    <ul class="pagination step-links navigation">
+        {% if things.has_previous %}
+            <li><a href="?page={{ things.previous_page_number }}" aria-label="poprzednia"><span aria-hidden="true">&laquo;</span></a></li>
+        {% endif %}
+        {% for page in things.paginator.page_range %}
+            <li class="{% if page == things.number %}active current{% endif %}">
+                <a href="?page={{ page }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+        {% if things.has_next %}
+            <li><a href="?page={{ things.next_page_number }}" aria-label="następna"><span aria-hidden="true">&raquo;</span></a></li>
+        {% endif %}
+    </ul>
+</div>

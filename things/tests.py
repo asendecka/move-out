@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.template.loader import render_to_string
+from django.http import Http404
 from django.test import Client, TestCase
 
 from .models import Thing, Taker
@@ -21,6 +21,7 @@ class ThingTest(ThingBasicTest):
     def test_things_are_displayed(self):
         url = reverse('things:list', kwargs={'token': self.ola.token})
         response = self.client.get(url)
+        self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'things/list.html')
         self.assertContains(response, self.book.name)
         self.assertContains(response, self.table.name)
@@ -48,7 +49,9 @@ class TakeThingTest(ThingBasicTest):
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.post(url, data={'taker_token': self.ola.token})
         
-        self.assertEqual(302, response.status_code)
+        self.assertRedirects(response, reverse(
+            'things:detail', 
+            kwargs={'token': self.ola.token, 'pk': self.book.pk}))
         book = Thing.objects.get(pk=self.book.pk)
         self.assertEquals(self.ola, book.taken_by)
 
@@ -72,23 +75,29 @@ class TakeThingTest(ThingBasicTest):
         response = self.client.get(url)
 
         self.assertTemplateUsed(response, 'things/detail.html')
-        button_code = render_to_string(
-            'things/include/take_form.html', 
-            {'token': self.ola.token, 'thing': self.book})
         self.assertContains(response, self.ola.token)
 
-    def test_cannot_take_thing_when_its_taken(self):
+    def test_no_form_displayed_when_thing_taken(self):
         self.book.taken_by = self.tomek
         self.book.save()
         url = reverse('things:detail',
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.get(url)
-        
         self.assertNotContains(response, '<form')
+
+    def test_cannot_take_thing_when_its_taken(self):
+        self.book.taken_by = self.tomek
+        self.book.save()
+        url = reverse('things:take', kwargs={'token': self.ola.token,
+                                             'pk': self.book.pk})
+        response = self.client.post(url, data={'taker_token': self.ola.token})
+        self.assertEqual(404, response.status_code)
 
 
 class GiveBackThingTest(ThingBasicTest):
     def test_give_back_thing(self):
+        self.book.taken_by = self.ola
+        self.book.save()
         url = reverse('things:give_back',
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.post(url, data={'taker_token': self.ola.token})
@@ -97,13 +106,21 @@ class GiveBackThingTest(ThingBasicTest):
         book = Thing.objects.get(pk=self.book.pk)
         self.assertEquals(None, book.taken_by)
     
-    def test_cannot_give_back_thing_taken_by_others(self):
+    def test_no_give_back_form_when_taken_by_others(self):
         self.book.taken_by = self.tomek
         self.book.save()
         url = reverse('things:detail',
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.get(url)
         self.assertNotContains(response, '<form')
+    
+    def test_cannot_give_back_thing_taken_by_others(self):
+        self.book.taken_by = self.tomek
+        self.book.save()
+        url = reverse('things:give_back', kwargs={'token': self.ola.token,
+                                                  'pk': self.book.pk})
+        response = self.client.post(url, data={'taker_token': self.ola.token})
+        self.assertEqual(404, response.status_code)
 
 
 class ThingModelTest(ThingBasicTest):
@@ -112,6 +129,12 @@ class ThingModelTest(ThingBasicTest):
         self.book.give_to(self.ola)
         book = Thing.objects.get(pk=self.book.pk)
         self.assertEqual(self.ola, book.taken_by)
+
+    def test_cannot_give_the_same_thing_twice(self):
+        self.book.taken_by = self.tomek
+        self.book.save()
+        with self.assertRaises(ValueError):
+            self.book.give_to(self.ola)
 
     def test_give_back(self):
         self.book.taken_by = self.ola
@@ -128,7 +151,7 @@ class ThingModelTest(ThingBasicTest):
         self.assertEqual(self.tomek, book.taken_by)
 
 
-class ThingAddTest(ThingBasicTest):
+class ThingAddFormTest(ThingBasicTest):
     def test_add(self):
         url = reverse('things:add', kwargs={'token': self.ola.token})
         response = self.client.get(url)

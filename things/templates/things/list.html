@@ -1,5 +1,6 @@
 {% extends "things/base.html" %}
 {% block content %}
+    {% include 'things/include/thing_paginator.html' %}
     <div class="content container-fluid">
         <div class="row">
             {% for thing in things %}
@@ -16,4 +17,5 @@
             {% endfor %}
         </div>
     </div>
+    {% include 'things/include/thing_paginator.html' %}
 {% endblock %}

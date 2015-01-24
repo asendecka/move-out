@@ -50,8 +50,15 @@ h1.title {
 .info {
     font-size: 1.1em;
     color: #555;
+    margin-right: 30px;
 }
 
 .add {
     float: right;
+}
+
+.pagination-lg {
+    margin: auto;
+    width: 100%;
+    text-align: center;
 }
