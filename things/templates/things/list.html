@@ -1,13 +1,15 @@
 {% extends "things/base.html" %}
 {% block content %}
-    <div class="content container">
-        <div class="row">{{ me}}
+    <div class="content container-fluid">
+        <div class="row">
             {% for thing in things %}
-            <div class="col-md-4">
+            <div class="col-md-4 thing">
                 <div>
-                    <a href="{% url 'things:detail' token=token pk=thing.pk %}">{% if thing.picture %}<img src="{{ thing.picture.url }}"/>{% endif %}</a>
+                    <a href="{% url 'things:detail' token=token pk=thing.pk %}">
+                        {% if thing.picture %}<img alt="{{ thing.name }}" class="img-rounded" src="{{ thing.picture.url }}"/>{% endif %}
+                    </a>
                 </div>
-                <div class="">
+                <div class="text-center thing-name">
                     <a href="{% url 'things:detail' token=token pk=thing.pk %}">{{ thing.name }}</a>
                 </div>
             </div>

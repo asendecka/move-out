@@ -16,6 +16,7 @@ class Thing(models.Model):
     name = models.CharField(max_length=255)
     picture = models.ImageField(upload_to="things/pictures/", blank=True)
     taken_by = models.ForeignKey(Taker, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
     def give_to(self, taker):
         self.taken_by = taker

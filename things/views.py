@@ -1,7 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, render, redirect
 
-from .models import Thing, Taker
+from .forms import ThingForm
+from .models import Taker, Thing
 
 
 def thing_list(request, token):
@@ -34,3 +35,18 @@ def thing_give_back(request, token, pk):
         thing.give_back(thing_taker)
     return redirect(reverse('things:detail',
         kwargs={'pk': thing.pk, 'token': token}))
+
+
+def thing_add(request, token):
+    if request.method == "POST":
+        form = ThingForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            if request.POST.get("save") == "Zapisz":
+                return redirect(reverse('things:detail', 
+                                kwargs={'pk': instance.pk, 'token': token}))
+            else:
+                form = ThingForm()
+    else:
+        form = ThingForm()
+    return render(request, 'things/add.html', {'token': token, 'form': form})

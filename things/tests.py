@@ -127,3 +127,11 @@ class ThingModelTest(ThingBasicTest):
         self.book.give_back(self.ola)
         book = Thing.objects.get(pk=self.book.pk)
         self.assertEqual(self.tomek, book.taken_by)
+
+
+class ThingAddTest(ThingBasicTest):
+    def test_add(self):
+        url = reverse('things:add', kwargs={'token': self.ola.token})
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'things/add.html')
+        self.assertIn('form', response.context)

@@ -3,10 +3,46 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 img {
-    width: 200px;
+    width: 100%;
 }
 
 .page-header {
     margin-top: 0;
     padding: 20px 20px 20px 40px;
+}
+
+p, a {
+    font-size: 1.2em; 
+}
+
+.thing {
+    min-height: 340px;
+}
+
+.booked {
+    font-size: 1.0em;
+    color: #454545;
+    font-style: italic;
+    margin-bottom: 25px;
+}
+
+.book-form {
+    float: right;
+}
+
+.thing-detail {
+    margin-bottom: 100px;
+}
+
+h1.title {
+    margin-top: 0;
+}
+
+.thing-name {
+    margin: 10px 5px;
+}
+
+.file {
+    clear: both;
+    margin-bottom: 30px;
 }

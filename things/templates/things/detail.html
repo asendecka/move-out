@@ -1,18 +1,22 @@
 {% extends "things/base.html" %}
 {% block content %}
-    <div>
-        <h1>{{ thing.name }}</h1>
-        {% if thing.picture %}<img src="{{ thing.picture.url }}">{% endif %}
-        {% if thing.taken_by %}
-            <p>
-                zarezerwowane przez
-                {{ thing.taken_by.name }}
+    <div class="col-md-6 thing-detail">
+        <div class="book-form">
+            {% if thing.taken_by %}
                 {% if token == thing.taken_by.token %}
                     {% include 'things/include/give_back_form.html' %}
                 {% endif %}
-            </p>
-        {% else %}
-            {% include 'things/include/take_form.html' %}
-        {% endif %}
+            {% else %}
+                {% include 'things/include/take_form.html' %}
+            {% endif %}
+        </div>
+        <h1 class="title">{{ thing.name }}</h1>
+        <p class="booked">
+            {% if thing.taken_by %}
+                zarezerwowane przez {{ thing.taken_by.name }}
+            {% endif %}
+        </p>
+        {% if thing.picture %}<img alt="{{ thing.name }}" class="img-rounded" src="{{ thing.picture.url }}">{% endif %}
+        {% if thing.description %}<p>{{ thing.description|linebreaks }}</p>{% endif %}
     </div>
 {% endblock %}
