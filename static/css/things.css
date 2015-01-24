@@ -46,3 +46,12 @@ h1.title {
     clear: both;
     margin-bottom: 30px;
 }
+
+.info {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.add {
+    float: right;
+}

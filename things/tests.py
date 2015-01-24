@@ -84,7 +84,7 @@ class TakeThingTest(ThingBasicTest):
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.get(url)
         
-        self.assertNotContains(response, 'form')
+        self.assertNotContains(response, '<form')
 
 
 class GiveBackThingTest(ThingBasicTest):
@@ -103,8 +103,7 @@ class GiveBackThingTest(ThingBasicTest):
         url = reverse('things:detail',
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.get(url)
-        
-        self.assertNotContains(response, 'form')
+        self.assertNotContains(response, '<form')
 
 
 class ThingModelTest(ThingBasicTest):
