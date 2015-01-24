@@ -105,3 +105,25 @@ class GiveBackThingTest(ThingBasicTest):
         response = self.client.get(url)
         
         self.assertNotContains(response, 'form')
+
+
+class ThingModelTest(ThingBasicTest):
+    def test_give_to(self):
+        self.assertEqual(None, self.book.taken_by)
+        self.book.give_to(self.ola)
+        book = Thing.objects.get(pk=self.book.pk)
+        self.assertEqual(self.ola, book.taken_by)
+
+    def test_give_back(self):
+        self.book.taken_by = self.ola
+        self.book.save()
+        self.book.give_back(self.ola)
+        book = Thing.objects.get(pk=self.book.pk)
+        self.assertEqual(None, book.taken_by)
+
+    def test_cannot_give_back_for_other_user(self):
+        self.book.taken_by = self.tomek
+        self.book.save()
+        self.book.give_back(self.ola)
+        book = Thing.objects.get(pk=self.book.pk)
+        self.assertEqual(self.tomek, book.taken_by)
