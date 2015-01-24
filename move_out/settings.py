@@ -69,7 +69,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = False
+TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 
@@ -87,6 +87,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-MEDIA_ROOT = os.path.dirname(os.path.dirname(__file__))
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-MEDIA_URL = '/m/'
+MEDIA_URL = '/media/'

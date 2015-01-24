@@ -6,7 +6,7 @@
         {% if thing.taken_by %}
             <p>
                 zarezerwowane przez
-                {{ thing.taken_by.first_name }} {{ thing.taken_by.last_name }}
+                {{ thing.taken_by.name }}
                 {% if token == thing.taken_by.token %}
                     {% include 'things/include/give_back_form.html' %}
                 {% endif %}

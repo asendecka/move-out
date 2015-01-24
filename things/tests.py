@@ -2,20 +2,18 @@ from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.test import Client, TestCase
 
-from .models import Thing, ThingTaker
+from .models import Thing, Taker
 
 
 class ThingBasicTest(TestCase):
     def setUp(self):
         self.book = Thing.objects.create(name='Book')
         self.table = Thing.objects.create(name='Table')
-        self.ola = ThingTaker.objects.create(
-            first_name='Ola',
-            last_name='Sendecka',
+        self.ola = Taker.objects.create(
+            name='Ola',
         )
-        self.tomek = ThingTaker.objects.create(
-            first_name='Tomek',
-            last_name='Paczkowski',
+        self.tomek = Taker.objects.create(
+            name='Tomek',
         )
 
 
@@ -41,8 +39,7 @@ class ThingTest(ThingBasicTest):
         url = reverse('things:detail',
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.get(url)
-        self.assertContains(response, self.book.taken_by.first_name)
-        self.assertContains(response, self.book.taken_by.last_name)
+        self.assertContains(response, self.book.taken_by.name)
 
 
 class TakeThingTest(ThingBasicTest):

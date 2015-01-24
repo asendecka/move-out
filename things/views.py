@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, render, redirect
 
-from .models import Thing, ThingTaker
+from .models import Thing, Taker
 
 
 def thing_list(request, token):
@@ -19,7 +19,7 @@ def thing_detail(request, token, pk):
 def thing_take(request, token, pk):
     thing = get_object_or_404(Thing, pk=pk)
     taker_token = request.POST.get('taker_token')
-    thing_taker = get_object_or_404(ThingTaker, token=taker_token)
+    thing_taker = get_object_or_404(Taker, token=taker_token)
     if request.method == "POST":
         thing.give_to(thing_taker)
     return redirect(reverse('things:detail',
@@ -29,7 +29,7 @@ def thing_take(request, token, pk):
 def thing_give_back(request, token, pk):
     thing = get_object_or_404(Thing, pk=pk)
     taker_token = request.POST.get('taker_token')
-    thing_taker = get_object_or_404(ThingTaker, token=taker_token)
+    thing_taker = get_object_or_404(Taker, token=taker_token)
     if request.method == "POST":
         thing.give_back(thing_taker)
     return redirect(reverse('things:detail',

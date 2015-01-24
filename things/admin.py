@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Thing, ThingTaker
+from .models import Thing, Taker
 
 
 @admin.register(Thing)
@@ -8,6 +8,6 @@ class ThingAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(ThingTaker)
-class ThingTaker(admin.ModelAdmin):
+@admin.register(Taker)
+class TakerAdmin(admin.ModelAdmin):
     pass

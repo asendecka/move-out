@@ -56,5 +56,5 @@ target/
 # Sqlite
 *.sqlite3
 
-# Pics
-things/pictures/
+# Media files
+media/
