@@ -15,9 +15,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Taker',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False,
+                                        auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255)),
-                ('token', models.CharField(default=uuid.uuid4, unique=True, max_length=100)),
+                ('token', models.CharField(default=uuid.uuid4, unique=True,
+                                           max_length=100)),
             ],
             options={
             },

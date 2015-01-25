@@ -15,10 +15,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Thing',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False,
+                                        auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255)),
-                ('picture', models.ImageField(upload_to=b'things/pictures/', blank=True)),
-                ('taken_by', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('picture', models.ImageField(upload_to=b'things/pictures/',
+                                              blank=True)),
+                ('taken_by', models.ForeignKey(blank=True,
+                                               to=settings.AUTH_USER_MODEL,
+                                               null=True)),
             ],
             options={
             },

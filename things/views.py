@@ -1,6 +1,7 @@
 from django.core.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
@@ -13,7 +14,8 @@ THINGS_ON_PAGE = 50
 
 
 def thing_list(request, token):
-    things = Thing.objects.all()
+    things = Thing.objects.filter(Q(taken_by__token=token) |
+                                  Q(taken_by__token__isnull=True))
     paginator = Paginator(things, THINGS_ON_PAGE)
 
     page = request.GET.get('page')
@@ -24,13 +26,13 @@ def thing_list(request, token):
     except EmptyPage:
         things = paginator.page(paginator.num_pages)
     return render(request, 'things/list.html',
-        {'things': things, 'token': token})
+                  {'things': things, 'token': token})
 
 
 def thing_detail(request, token, pk):
     thing = get_object_or_404(Thing, pk=pk)
-    return render(request, 'things/detail.html', 
-        {'thing': thing, 'token': token})
+    return render(request, 'things/detail.html',
+                  {'thing': thing, 'token': token})
 
 
 def thing_take(request, token, pk):
@@ -61,7 +63,7 @@ def thing_give_back(request, token, pk):
                                     params)
             return JsonResponse({'msg': "Oddane!", 'form': data})
     return redirect(reverse('things:detail',
-        kwargs={'pk': thing.pk, 'token': token}))
+                    kwargs={'pk': thing.pk, 'token': token}))
 
 
 def thing_add(request, token):
@@ -70,7 +72,7 @@ def thing_add(request, token):
         if form.is_valid():
             instance = form.save()
             if request.POST.get("save") == "Zapisz":
-                return redirect(reverse('things:detail', 
+                return redirect(reverse('things:detail',
                                 kwargs={'pk': instance.pk, 'token': token}))
             else:
                 form = ThingForm()

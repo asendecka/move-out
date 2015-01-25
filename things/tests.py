@@ -1,6 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.http import Http404
-from django.test import Client, TestCase
+from django.test import TestCase
 
 from .models import Thing, Taker
 
@@ -48,9 +47,8 @@ class TakeThingTest(ThingBasicTest):
         url = reverse('things:take',
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.post(url, data={'taker_token': self.ola.token})
-        
         self.assertRedirects(response, reverse(
-            'things:detail', 
+            'things:detail',
             kwargs={'token': self.ola.token, 'pk': self.book.pk}))
         book = Thing.objects.get(pk=self.book.pk)
         self.assertEquals(self.ola, book.taken_by)
@@ -60,11 +58,10 @@ class TakeThingTest(ThingBasicTest):
         url = reverse('things:take',
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.post(url, data={'token': invalid_token})
-        
         self.assertEquals(404, response.status_code)
 
     def test_take_thing_with_no_token(self):
-        url = reverse('things:take', 
+        url = reverse('things:take',
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.post(url, data={})
         self.assertEquals(404, response.status_code)
@@ -101,11 +98,11 @@ class GiveBackThingTest(ThingBasicTest):
         url = reverse('things:give_back',
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.post(url, data={'taker_token': self.ola.token})
-        
+
         self.assertEqual(302, response.status_code)
         book = Thing.objects.get(pk=self.book.pk)
         self.assertEquals(None, book.taken_by)
-    
+
     def test_no_give_back_form_when_taken_by_others(self):
         self.book.taken_by = self.tomek
         self.book.save()
@@ -113,7 +110,7 @@ class GiveBackThingTest(ThingBasicTest):
                       kwargs={'pk': self.book.pk, 'token': self.ola.token})
         response = self.client.get(url)
         self.assertNotContains(response, '<form')
-    
+
     def test_cannot_give_back_thing_taken_by_others(self):
         self.book.taken_by = self.tomek
         self.book.save()
