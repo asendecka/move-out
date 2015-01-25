@@ -9,5 +9,4 @@ pep8==1.5.7
 Pillow==2.7.0
 pyflakes==0.8.1
 waitress==0.8.9
-whitenoise==1.0.6
 psycopg2==2.5.4
