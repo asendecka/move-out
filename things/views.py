@@ -10,7 +10,7 @@ from .forms import ThingForm
 from .models import Taker, Thing
 
 
-THINGS_ON_PAGE = 50
+THINGS_ON_PAGE = 51
 
 
 def thing_list(request, token):
