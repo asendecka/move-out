@@ -1,6 +1,9 @@
+from django.core.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
+from django.template.loader import render_to_string
 
 from .forms import ThingForm
 from .models import Taker, Thing
@@ -32,20 +35,31 @@ def thing_detail(request, token, pk):
 
 def thing_take(request, token, pk):
     thing = get_object_or_404(Thing, pk=pk, taken_by=None)
-    taker_token = request.POST.get('taker_token')
-    thing_taker = get_object_or_404(Taker, token=taker_token)
+    thing_taker = get_object_or_404(Taker, token=token)
     if request.method == "POST":
+        is_ajax = request.POST.get('is_ajax')
         thing.give_to(thing_taker)
-    return redirect(reverse('things:detail',
-        kwargs={'pk': thing.pk, 'token': token}))
+        if is_ajax:
+            params = {'token': token, 'thing': thing, 'css_class': 'booking'}
+            params.update(csrf(request))
+            data = render_to_string('things/include/give_back_form.html',
+                                    params)
+            return JsonResponse({'msg': "Twoje!", 'form': data})
+    return redirect('things:detail', pk=thing.pk, token=token)
 
 
 def thing_give_back(request, token, pk):
     thing = get_object_or_404(Thing, pk=pk, taken_by__token=token)
-    taker_token = request.POST.get('taker_token')
-    thing_taker = get_object_or_404(Taker, token=taker_token)
+    thing_taker = get_object_or_404(Taker, token=token)
     if request.method == "POST":
+        is_ajax = request.POST.get('is_ajax')
         thing.give_back(thing_taker)
+        if is_ajax:
+            params = {'token': token, 'thing': thing, 'css_class': 'booking'}
+            params.update(csrf(request))
+            data = render_to_string('things/include/take_form.html',
+                                    params)
+            return JsonResponse({'msg': "Oddane!", 'form': data})
     return redirect(reverse('things:detail',
         kwargs={'pk': thing.pk, 'token': token}))
 

@@ -1,4 +1,3 @@
-<form action="{% url 'things:give_back' token=token pk=thing.pk %}" method="POST">{% csrf_token %}
-    <input type="hidden" name="taker_token" value="{{ token }}" />
+<form {% if css_class %}class="{{ css_class }}"{% endif %} action="{% url 'things:give_back' token=token pk=thing.pk %}" method="POST">{% csrf_token %}
     <input class="btn btn-default btn-lg" type="submit" value="Nie chcę" />
 </form>

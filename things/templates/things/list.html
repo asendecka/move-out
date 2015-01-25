@@ -1,4 +1,8 @@
 {% extends "things/base.html" %}
+{% load staticfiles %}
+{% block header %}
+    <script src="{% static 'js/thing_list.js' %}"></script>
+{% endblock %}
 {% block content %}
     {% include 'things/include/thing_paginator.html' %}
     <div class="content container-fluid">
@@ -12,6 +16,11 @@
                 </div>
                 <div class="text-center thing-name">
                     <a href="{% url 'things:detail' token=token pk=thing.pk %}">{{ thing.name }}</a>
+                    {% if not thing.taken_by %}
+                        {% include 'things/include/take_form.html' with css_class='booking' %}
+                    {% elif thing.taken_by.token == token %}
+                        {% include 'things/include/give_back_form.html' with css_class='booking' %}
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

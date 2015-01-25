@@ -16,7 +16,14 @@ p, a {
 }
 
 .thing {
-    min-height: 340px;
+    min-height: 395px;
+    position: relative;
+}
+
+.booking {
+    position: absolute;
+    top: 6px;
+    right: 20px;
 }
 
 .booked {
