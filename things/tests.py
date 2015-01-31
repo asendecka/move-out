@@ -54,15 +54,9 @@ class TakeThingTest(ThingBasicTest):
         self.assertEquals(self.ola, book.taken_by)
 
     def test_take_thing_with_invalid_token(self):
-        invalid_token = 'xxxxx'
+        invalid_token = '25648235'
         url = reverse('things:take',
-                      kwargs={'pk': self.book.pk, 'token': self.ola.token})
-        response = self.client.post(url, data={'token': invalid_token})
-        self.assertEquals(404, response.status_code)
-
-    def test_take_thing_with_no_token(self):
-        url = reverse('things:take',
-                      kwargs={'pk': self.book.pk, 'token': self.ola.token})
+                      kwargs={'pk': self.book.pk, 'token': invalid_token})
         response = self.client.post(url, data={})
         self.assertEquals(404, response.status_code)
 
