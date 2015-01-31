@@ -15,8 +15,10 @@ THINGS_ON_PAGE = 51
 
 def thing_list(request, token):
     things = Thing.objects.filter(Q(taken_by__token=token) |
-                                  Q(taken_by__token__isnull=True))
+                                  Q(taken_by__token__isnull=True)
+                                  ).order_by('id')
     paginator = Paginator(things, THINGS_ON_PAGE)
+    taker = get_object_or_404(Taker, token=token)
 
     page = request.GET.get('page')
     try:
@@ -26,13 +28,14 @@ def thing_list(request, token):
     except EmptyPage:
         things = paginator.page(paginator.num_pages)
     return render(request, 'things/list.html',
-                  {'things': things, 'token': token})
+                  {'things': things, 'token': token, 'taker': taker})
 
 
 def thing_detail(request, token, pk):
     thing = get_object_or_404(Thing, pk=pk)
+    taker = get_object_or_404(Taker, token=token)
     return render(request, 'things/detail.html',
-                  {'thing': thing, 'token': token})
+                  {'thing': thing, 'token': token, 'taker': taker})
 
 
 def thing_take(request, token, pk):

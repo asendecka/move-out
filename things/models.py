@@ -1,6 +1,7 @@
 from uuid import uuid4
 import os
 
+from django.conf import settings
 from django.db import models
 
 
@@ -34,5 +35,20 @@ class Thing(models.Model):
             self.taken_by = None
             self.save()
 
+    @property
+    def picture_url(self):
+        return settings.MEDIA_URL + self.picture.name
+
     def __unicode__(self):
         return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    things = models.ManyToManyField(Thing)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'categories'

@@ -16,7 +16,7 @@
                 zarezerwowane przez {{ thing.taken_by.name }}
             {% endif %}
         </p>
-        {% if thing.picture %}<img alt="{{ thing.name }}" class="img-rounded" src="{{ thing.picture.url }}">{% endif %}
+        {% if thing.picture %}<img alt="{{ thing.name }}" class="img-rounded" src="{{ thing.picture_url }}">{% endif %}
         {% if thing.description %}<p>{{ thing.description|linebreaks }}</p>{% endif %}
     </div>
 {% endblock %}

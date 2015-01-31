@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = os.environ.get('SECRET_KEY', 'super_secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = 'DJANGO_DEBUG' in os.environ
 
 TEMPLATE_DEBUG = True
 
@@ -101,16 +101,13 @@ AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
-    STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
-    STATICFILES_LOCATION = 'static'
-    STATICFILES_STORAGE = 'move_out.custom_storages.StaticStorage'
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
 
-    MEDIAFILES_LOCATION = 'media'
-    MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+    MEDIA_URL = "https://%s/" % (AWS_S3_CUSTOM_DOMAIN, )
     DEFAULT_FILE_STORAGE = 'move_out.custom_storages.MediaStorage'
 else:
-    STATIC_URL = '/static/'
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
     MEDIA_URL = '/media/'
 

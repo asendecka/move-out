@@ -9,6 +9,7 @@ class ThingForm(forms.ModelForm):
         picture = None
         if self.cleaned_data['picture']:
             picture = resize_image(self.cleaned_data.pop('picture'))
+        kwargs['commit'] = False
         instance = super(ThingForm, self).save(*args, **kwargs)
         instance.picture = picture
         instance.save()

@@ -1,7 +1,11 @@
+import os
+from PIL import Image
+
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from .models import Thing, Taker
+from .utils import resize_image, WIDTH, HEIGHT
 
 
 class ThingBasicTest(TestCase):
@@ -148,3 +152,13 @@ class ThingAddFormTest(ThingBasicTest):
         response = self.client.get(url)
         self.assertTemplateUsed(response, 'things/add.html')
         self.assertIn('form', response.context)
+
+
+class ResizeImageTest(TestCase):
+    def test_resize_image(self):
+        picture_file = resize_image(open(os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            'test_img.png')))
+        image = Image.open(picture_file)
+        self.assertTrue(image.size[0] <= WIDTH)
+        self.assertTrue(image.size[1] <= HEIGHT)

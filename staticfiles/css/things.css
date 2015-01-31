@@ -1,0 +1,71 @@
+h1, h2, h3, h4, h5, h6 {
+   font-family: 'Open Sans Condensed', sans-serif;
+}
+
+img {
+    width: 100%;
+}
+
+.page-header {
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+
+p, a {
+    font-size: 1.2em; 
+}
+
+.thing {
+    min-height: 285px;
+    position: relative;
+}
+
+.booking {
+    position: absolute;
+    top: 6px;
+    right: 20px;
+}
+
+.booked {
+    font-size: 1.0em;
+    color: #454545;
+    font-style: italic;
+    margin-bottom: 25px;
+}
+
+.book-form {
+    float: right;
+}
+
+.thing-detail {
+    margin-bottom: 100px;
+}
+
+h1.title {
+    margin-top: 0;
+}
+
+.thing-name {
+    margin: 10px 5px;
+}
+
+.file {
+    clear: both;
+    margin-bottom: 30px;
+}
+
+.info {
+    font-size: 1.1em;
+    color: #555;
+    margin-right: 30px;
+}
+
+.add {
+    float: right;
+}
+
+.pagination-lg {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
