@@ -113,7 +113,7 @@ else:
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
 SENDGRID_USER = os.environ.get('SENDGRID_USER')
-SENDGRID_PASSWORD = os.environ.get('SENDGRID_SECRET')
+SENDGRID_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
 SENDGRID_FROM_EMAIL = os.environ.get('SENDGRID_FROM_EMAIL')
 
 DATABASES = {
