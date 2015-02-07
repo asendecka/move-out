@@ -104,5 +104,20 @@ def send_mail_to_taker(request, token, taker_pk):
     send_mail(subject, content, settings.SENDGRID_FROM_EMAIL, [taker.email])
     taker.email_sent = timezone.now()
     taker.save()
-    print taker.email_sent
     return JsonResponse({'msg': " (Wysłane!) "})
+
+def my_things(request, token):
+    taker = get_object_or_404(Taker, token=token)
+    things = Thing.objects.filter(taken_by=taker)
+    paginator = Paginator(things, THINGS_ON_PAGE)
+    taker = get_object_or_404(Taker, token=token)
+
+    page = request.GET.get('page')
+    try:
+        things = paginator.page(page)
+    except PageNotAnInteger:
+        things = paginator.page(1)
+    except EmptyPage:
+        things = paginator.page(paginator.num_pages)
+    return render(request, 'things/my_list.html',
+                  {'things': things, 'token': token, 'taker': taker})

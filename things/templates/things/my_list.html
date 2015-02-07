@@ -1,0 +1,20 @@
+{% extends "things/base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <h1>Lista rzeczy, które bierzesz</h1>
+    {% include 'things/include/thing_paginator.html' %}
+    <div class="content container-fluid">
+        <div class="row">
+            {% for thing in things %}
+            <div class="col-md-2 thing">
+                <div>
+                    <a href="{% url 'things:detail' token=token pk=thing.pk %}">
+                        {% if thing.picture %}<img alt="{{ thing.name }}" class="img-rounded" src="{{ thing.picture_url }}"/>{% endif %}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'things/include/thing_paginator.html' %}
+{% endblock %}
