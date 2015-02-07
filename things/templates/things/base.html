@@ -14,7 +14,10 @@
     </head>
     <body>
         <div class="page-header">
-            {% if request.user.is_superuser %}<a class="add" href="{% url 'things:add' token=token %}"><span class="glyphicon glyphicon-plus"></span> Dodaj</a>{% endif %}
+            {% if request.user.is_superuser %}
+                <a class="add" href="{% url 'things:add' token=token %}"><span class="glyphicon glyphicon-plus"></span> Dodaj</a>
+                <a class="takers" href="{% url 'things:taker_list' token=token %}"><span class="glyphicon glyphicon-envelope"></span> Wyślij e-maile z linkiem</a>
+            {% endif %}
             <h1><a href="{% url 'things:list' token=token %}">Cześć, {{ taker.name }}</a></h1>
             <p class="info">Wyjeżdżamy do Londynu i rozdajemy rzeczy! Zaznaczajcie, co byście chcieli przygarnąć. Wszystko poniżej 
             oddamy w dobre ręce. Jedyny nasz warunek, to osobisty odbiór przedmiotów. Inaczej zamiast się pakować

@@ -1,10 +1,14 @@
+# -*- coding: utf-8 -*-
+from django.utils import timezone
 from django.core.context_processors import csrf
+from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, Http404, render, redirect
 from django.template.loader import render_to_string
+from django.conf import settings
 
 from .forms import ThingForm
 from .models import Taker, Thing
@@ -82,3 +86,23 @@ def thing_add(request, token):
     else:
         form = ThingForm()
     return render(request, 'things/add.html', {'token': token, 'form': form})
+
+
+def taker_list(request, token):
+    takers = Taker.objects.all()
+    return render(request, 'things/taker_list.html',
+                  {'takers': takers, 'token': token})
+
+
+def send_mail_to_taker(request, token, taker_pk):
+    taker = get_object_or_404(Taker, pk=taker_pk)
+    if not taker.email:
+        return JsonResponse({'msg': "Brak e-maila", "error": True})
+    subject = "Rozdajemy nasze rzeczy!"
+    content = render_to_string('things/mail/taker_link.html',
+        {'taker_token': taker.token, 'token': token})
+    send_mail(subject, content, settings.SENDGRID_FROM_EMAIL, [taker.email])
+    taker.email_sent = timezone.now()
+    taker.save()
+    print taker.email_sent
+    return JsonResponse({'msg': " (Wysłane!) "})

@@ -1,0 +1,13 @@
+{% extends 'things/base.html' %}
+{% load staticfiles %}
+{% block header %}
+    <script src="{% static 'js/email_taker.js' %}"></script>
+{% endblock %}
+{% block content %}
+<ul>
+{% for taker in takers %}
+    <li>{{ taker.name }} 
+        {% if taker.email %}<span class="msg"><a href="{% url 'things:send_mail_to_taker' token=token taker_pk=taker.pk %}">wyślij e-mail</a> {% if taker.email_sent %}<small>ostatnio wysłane: {{ taker.email_sent|date:"d.m.Y, G:i" }}</small>{% endif %}</span>{% else %} <em>(Brak e-maila)</em>{% endif %}</li>
+{% endfor %}
+</ul>
+{% endblock%}

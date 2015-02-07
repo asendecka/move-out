@@ -111,6 +111,11 @@ else:
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
     MEDIA_URL = '/media/'
 
+EMAIL_BACKEND = "sgbackend.SendGridBackend"
+SENDGRID_USER = os.environ.get('SENDGRID_USER')
+SENDGRID_PASSWORD = os.environ.get('SENDGRID_SECRET')
+SENDGRID_FROM_EMAIL = os.environ.get('SENDGRID_FROM_EMAIL')
+
 DATABASES = {
     'default': dj_database_url.config(default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'))
 }

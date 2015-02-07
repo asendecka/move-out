@@ -13,6 +13,8 @@ def get_image_path(instance, filename):
 class Taker(models.Model):
     name = models.CharField(max_length=255)
     token = models.CharField(max_length=100, default=uuid4, unique=True)
+    email = models.EmailField(null=True, blank=True)
+    email_sent = models.DateTimeField(null=True, editable=False)
 
     def __unicode__(self):
         return self.name
