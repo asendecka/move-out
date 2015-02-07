@@ -20,6 +20,10 @@ p, a {
     position: relative;
 }
 
+.my-thing {
+    min-height: 125px;
+}
+
 .booking {
     position: absolute;
     top: 6px;
