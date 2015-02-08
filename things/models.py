@@ -17,7 +17,7 @@ class Taker(models.Model):
     email_sent = models.DateTimeField(null=True, editable=False)
 
     def taken_things(self):
-        return Thing.objects.filter(taken_by=self)
+        return Thing.objects.filter(taken_by=self).order_by('pk')
 
     def __unicode__(self):
         return self.name
