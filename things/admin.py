@@ -5,7 +5,9 @@ from .models import Category, Taker, Thing
 
 @admin.register(Thing)
 class ThingAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'taken_by')
+    list_filter = ('taken_by',)
+    search_fields = ('name', )
 
 
 @admin.register(Taker)
