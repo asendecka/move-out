@@ -1,6 +1,7 @@
 import os
 from PIL import Image
 
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
@@ -147,6 +148,12 @@ class ThingModelTest(ThingBasicTest):
 
 
 class ThingAddFormTest(ThingBasicTest):
+    def setUp(self):
+        super(ThingAddFormTest, self).setUp()
+        self.user = User.objects.create_superuser('user', 'test@test.com',
+            'pass')
+        self.client.login(username='user', password='pass')
+
     def test_add(self):
         url = reverse('things:add', kwargs={'token': self.ola.token})
         response = self.client.get(url)
