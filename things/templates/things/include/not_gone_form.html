@@ -1,0 +1,3 @@
+<form {% if css_class %}class="{{ css_class }}"{% endif %} action="{% url 'things:thing_not_gone' token=token pk=thing.pk %}" method="POST">{% csrf_token %}
+    <input class="btn btn-default btn-lg" type="submit" value="Oddane" />
+</form>

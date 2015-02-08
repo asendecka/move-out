@@ -15,6 +15,15 @@ p, a {
     font-size: 1.2em; 
 }
 
+a {
+    color: #274698;
+}
+
+a:hover {
+    color: #5E6E98;
+    text-decoration: none;
+}
+
 .thing {
     min-height: 285px;
     position: relative;
@@ -73,4 +82,35 @@ h1.title {
     margin: auto;
     width: 100%;
     text-align: center;
+}
+
+.hidden {
+    visible: none;
+}
+
+.gone {
+    opacity: 0.6;
+}
+
+.email {
+    color: #1B1456;
+    margin: 2px 2px 2px 16px;
+}
+
+.email:hover {
+    color: #5C5973;
+}
+
+.taker small {
+    display: block;
+    color: #7B858E;
+}
+
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+    background-color: #274698;
+    border-color: #3E5BA6;
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: #274698;
 }

@@ -4,10 +4,13 @@
     <script src="{% static 'js/email_taker.js' %}"></script>
 {% endblock %}
 {% block content %}
+<h1>Zarządzaj ludźmi</h1>
+<p class="info">Możesz wysłać e-maila z linkiem do aplikacji klikając na 
+ikonkę z kopertą.</p>
 <ul>
 {% for taker in takers %}
-    <li>{{ taker.name }} 
-        {% if taker.email %}<span class="msg"><a href="{% url 'things:send_mail_to_taker' token=token taker_pk=taker.pk %}">wyślij e-mail</a> {% if taker.email_sent %}<small>ostatnio wysłane: {{ taker.email_sent|date:"d.m.Y, G:i" }}</small>{% endif %}</span>{% else %} <em>(Brak e-maila)</em>{% endif %}</li>
+    <li class="taker"><a href="{% url "things:taker_things" token=token taker_pk=taker.pk %}">{{ taker.name }}</a> 
+        {% if taker.email %}<span class="msg"><a class="email" href="{% url 'things:send_mail_to_taker' token=token taker_pk=taker.pk %}"><span alt="Wyślij e-mail z linkiem do aplikacji" class="glyphicon glyphicon-envelope send"></span></a> {% if taker.email_sent %}<small>ostatnio wysłane: {{ taker.email_sent|date:"d.m.Y, G:i" }}</small>{% endif %}</span>{% else %} <em>(Brak e-maila)</em>{% endif %}</li>
 {% endfor %}
 </ul>
 {% endblock%}

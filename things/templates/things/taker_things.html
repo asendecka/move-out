@@ -1,0 +1,33 @@
+{% extends "things/base.html" %}
+{% load staticfiles %}
+{% block header %}
+    <script src="{% static 'js/thing_list.js' %}"></script>
+    <script src="{% static 'js/things_gone.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <h1>{{ taker }} bierze</h1>
+    <p class="info">Zaznacz te, które już są odebrane klikając na dany przedmiot.</p>
+    {% include 'things/include/thing_paginator.html' %}
+    <div class="content container-fluid">
+        <div class="row">
+            {% for thing in things %}
+            <div class="col-md-2 thing">
+                <div>
+                    <a href="#" class="is-gone">
+                        {% if thing.picture %}<img alt="{{ thing.name }}" class="img-rounded {% if thing.gone %}gone{% endif %}" src="{{ thing.picture_url }}"/>{% endif %}
+                    </a>
+                </div>
+                <div class="text-center thing-name hidden">
+                    <a href="{% url 'things:detail' token=token pk=thing.pk %}">{{ thing.name }}</a>
+                    {% if not thing.gone %}
+                        {% include 'things/include/gone_form.html' with css_class='booking' %}
+                    {% else %}
+                        {% include 'things/include/not_gone_form.html' with css_class='booking' %}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'things/include/thing_paginator.html' %}
+{% endblock %}

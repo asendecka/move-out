@@ -12,4 +12,9 @@ urlpatterns = [
         name='send_mail_to_taker'),
     url(r'^taker/list/$', views.taker_list, name='taker_list'),
     url(r'^taker/my_things/$', views.my_things, name='my_things'),
+    url(r'^taker/taker_things/(?P<taker_pk>[0-9]+)/$', views.taker_things,
+        name='taker_things'),
+    url(r'^taker/gone/(?P<pk>[0-9]+)/$', views.thing_gone, name='thing_gone'),
+    url(r'^taker/not_gone/(?P<pk>[0-9]+)/$', views.thing_not_gone,
+        name='thing_not_gone'),
 ]

@@ -1,5 +1,5 @@
 $(document).ready ->
-    $(document).on 'click', '.container a', (e) ->
+    $(document).on 'click', '.container a.email', (e) ->
         url = $(this).attr('href')
         msg = $(this).closest('.msg')
         e.preventDefault()
