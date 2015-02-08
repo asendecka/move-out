@@ -11,7 +11,7 @@
     <div class="content container-fluid">
         <div class="row">
             {% for thing in things %}
-            <div class="col-md-2 thing">
+            <div class="col-md-2 thing my-thing">
                 <div>
                     <a href="#" class="is-gone">
                         {% if thing.picture %}<img alt="{{ thing.name }}" class="img-rounded {% if thing.gone %}gone{% endif %}" src="{{ thing.picture_url }}"/>{% endif %}
