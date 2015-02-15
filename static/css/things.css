@@ -41,6 +41,8 @@ a:hover {
 and (max-width : 1024px) {
     .content > div {
         -webkit-column-count: 2 !important;
+        -moz-column-count: 2 !important;
+        column-count: 2 !important;
     }
 }
 
@@ -48,6 +50,8 @@ and (max-width : 1024px) {
 and (max-width : 480px) {
     .content > div {
         -webkit-column-count: 1 !important;
+        -moz-column-count: 1 !important;
+        column-count: 1 !important;
     }
 }
 
