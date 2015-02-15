@@ -1,4 +1,4 @@
-<div class="col-md-4 thing">
+<div class="thing">
     <div>
         <a href="{% url 'things:detail' token=token pk=thing.pk %}">
             {% if thing.picture %}<img alt="{{ thing.name }}" class="img-rounded" src="{{ thing.picture_url }}"/>{% endif %}

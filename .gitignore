@@ -58,6 +58,7 @@ target/
 
 # Media files
 media/
+staticfiles/
 
 .DS_Store
 .idea
