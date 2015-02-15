@@ -24,9 +24,23 @@ a:hover {
     text-decoration: none;
 }
 
+.content > div {
+    -webkit-column-count: 3;
+    -webkit-column-gap: 10px;
+    -webkit-column-fill: auto;
+    -moz-column-count: 3;
+    -moz-column-gap: 10px;
+    -moz-column-fill: auto;
+    column-count: 3;
+    column-gap: 10px;
+    column-fill: auto;
+    overflow: hidden;
+}
+
 .thing {
-    min-height: 285px;
-    position: relative;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
 }
 
 .my-thing {
