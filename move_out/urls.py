@@ -6,6 +6,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^(?P<token>[a-f0-9-]+)/', include('things.urls', namespace='things',
         app_name='things')),
+    url(r'^$', 'things.views.global_list', name='global_list'),
 )
 
 if settings.DEBUG:

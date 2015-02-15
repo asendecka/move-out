@@ -20,6 +20,20 @@ THINGS_ON_PAGE = 51
 
 superuser_required = user_passes_test(lambda user: user.is_superuser)
 
+def global_list(request):
+    things = Thing.objects.filter(Q(taken_by__token__isnull=True)).order_by('id')
+    paginator = Paginator(things, THINGS_ON_PAGE)
+
+    page = request.GET.get('page')
+    try:
+        things = paginator.page(page)
+    except PageNotAnInteger:
+        things = paginator.page(1)
+    except EmptyPage:
+        things = paginator.page(paginator.num_pages)
+    return render(request, 'things/list.html',
+                  {'things': things})
+
 
 def thing_list(request, token):
     things = Thing.objects.filter(Q(taken_by__token=token) |
