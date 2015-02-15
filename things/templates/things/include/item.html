@@ -1,0 +1,8 @@
+<div class="col-md-4 thing">
+    <div>
+        {% if thing.picture %}<img alt="{{ thing.name }}" class="img-rounded" src="{{ thing.picture_url }}"/>{% endif %}
+    </div>
+    <div class="text-center thing-name">
+        <p>{{ thing.name }}</p>
+    </div>
+</div>
