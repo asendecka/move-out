@@ -26,13 +26,13 @@ a:hover {
 
 .content > div {
     -webkit-column-count: 3;
-    -webkit-column-gap: 10px;
+    -webkit-column-gap: 20px;
     -webkit-column-fill: auto;
     -moz-column-count: 3;
-    -moz-column-gap: 10px;
+    -moz-column-gap: 20px;
     -moz-column-fill: auto;
     column-count: 3;
-    column-gap: 10px;
+    column-gap: 20px;
     column-fill: auto;
     overflow: hidden;
 }
@@ -73,7 +73,7 @@ h1.title {
 }
 
 .thing-name {
-    margin: 10px 5px;
+    margin: 10px 5px 40px;
 }
 
 .file {
