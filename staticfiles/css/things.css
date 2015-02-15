@@ -41,6 +41,7 @@ a:hover {
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
     column-break-inside: avoid;
+    position: relative;
 }
 
 .my-thing {
@@ -50,7 +51,7 @@ a:hover {
 .booking {
     position: absolute;
     top: 6px;
-    right: 20px;
+    right: 6px;
 }
 
 .booked {
